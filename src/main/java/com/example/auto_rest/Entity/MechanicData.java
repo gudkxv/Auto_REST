@@ -2,14 +2,14 @@ package com.example.auto_rest.Entity;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "mechanic_data")
 public class MechanicData {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mechanic_data_seq_gen")
+    @SequenceGenerator(name = "mechanic_data_seq_gen", sequenceName = "mechanic_data_id_seq")
+    private long id;
 
     private String name;
 
@@ -17,8 +17,6 @@ public class MechanicData {
 
     private String specialisation;
     private int age;
-    @OneToMany(mappedBy = "mechanic")
-    private Set<RepairData> repairDataSet;
 
     public Long getId() {
         return id;
@@ -60,11 +58,4 @@ public class MechanicData {
         this.age = age;
     }
 
-    public Set<RepairData> getRepairDataSet() {
-        return repairDataSet;
-    }
-
-    public void setRepairDataSet(Set<RepairData> repairDataSet) {
-        this.repairDataSet = repairDataSet;
-    }
 }

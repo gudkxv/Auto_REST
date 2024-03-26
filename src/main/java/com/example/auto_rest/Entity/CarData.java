@@ -3,22 +3,23 @@ package com.example.auto_rest.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name  = "car_data")
+@Table(name = "car_data")
 public class CarData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_data_seq_gen")
+    @SequenceGenerator(name = "car_data_seq_gen", sequenceName = "car_data_id_seq")
+    private long id;
     private String type;
 
     private String owner;
 
     private int manufacture_year;
 
-    private String firm;
+    private String model;
 
-    @OneToOne(mappedBy = "car")
-    private RepairData repairData;
+    private String firm;
 
     public Long getId() {
         return id;
@@ -60,11 +61,12 @@ public class CarData {
         this.firm = firm;
     }
 
-    public RepairData getRepairData() {
-        return repairData;
+
+    public String getModel() {
+        return model;
     }
 
-    public void setRepairData(RepairData repairData) {
-        this.repairData = repairData;
+    public void setModel(String model) {
+        this.model = model;
     }
 }

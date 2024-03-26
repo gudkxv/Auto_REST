@@ -9,21 +9,29 @@ import java.util.Optional;
 
 @Service
 public class MechanicDataService {
-    private MechanicDataRepository mechanicDataRepository;
+    private final MechanicDataRepository mechanicDataRepository;
 
-    public MechanicDataService(MechanicDataRepository mechanicDataRepository){
+    public MechanicDataService(MechanicDataRepository mechanicDataRepository) {
         this.mechanicDataRepository = mechanicDataRepository;
     }
-    public void addMechanicData(MechanicData mechanicData){
+
+    public void addMechanicData(MechanicData mechanicData) {
         mechanicDataRepository.save(mechanicData);
     }
 
-    public List<MechanicData> getAll(){
+    public List<MechanicData> getAll() {
         return mechanicDataRepository.findAll();
     }
 
-    public Optional<MechanicData> getById(Long id){
+    public Optional<MechanicData> getById(Long id) {
         return mechanicDataRepository.findById(id);
     }
 
+    public void removeMechanicDataById(Long id) {
+        mechanicDataRepository.deleteById(id);
+    }
+
+    public List<MechanicData> getDataByQuery(String param1,String param2,String param3){
+        return mechanicDataRepository.getMechanicDataByCustomQuery(param1, param2, param3);
+    }
 }

@@ -1,23 +1,26 @@
 package com.example.auto_rest.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "repair_data")
 public class RepairData {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Date date;
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "repair_data_seq_gen")
+    @SequenceGenerator(name = "repair_data_seq_gen", sequenceName = "repair_data_id_seq")
+    private long id;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate date;
     private int price;
-    @ManyToOne
-    @JoinColumn(name = "mechanic_data_id",nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private MechanicData mechanic;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_data_id",referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private CarData car;
 
     public Long getId() {
@@ -28,11 +31,11 @@ public class RepairData {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
